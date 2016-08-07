@@ -1,0 +1,10 @@
+---
+- command: timedatectl set-timezone Asia/Seoul
+- apt: name={{ item }}
+  with_items:
+  - python-pip
+  - python-virtualenv
+  - libpq-dev
+  - htop
+# for postgresql actions
+- pip: name=psycopg2

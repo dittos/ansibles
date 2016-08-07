@@ -1,0 +1,12 @@
+---
+- git: repo=https://github.com/dittos/wikistat.git dest=~/wikistat force=yes
+  become: no
+- pip: requirements=~/wikistat/requirements.txt virtualenv=~/.venv/wikistat
+  become: no
+- cron: name="wikistat" minute="*/10" user=ubuntu job="cd ~/wikistat; git pull; ~/.venv/wikistat/bin/python -m wikistat.collect && ~/.venv/wikistat/bin/python -m wikistat.report"
+- file: path=~/wikistat/index.html state=file
+  become: no
+- file: path=~/www/wikistat state=directory
+  become: no
+- file: src=~/wikistat/index.html dest=~/www/wikistat/index.html state=link
+  become: no

@@ -1,0 +1,14 @@
+---
+- hosts: all
+  remote_user: ubuntu
+  become: yes
+  vars:
+    domain: ec2.dittos.pe.kr
+  vars_files:
+  - vars.yml
+  tasks:
+  - include: tasks/base.yml
+  - include: tasks/nginx.yml
+  - apt: name=postgresql
+  - include: tasks/apps/ttrss.yml
+  - include: tasks/apps/wikistat.yml

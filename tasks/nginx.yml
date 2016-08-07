@@ -1,0 +1,12 @@
+---
+- apt_repository: repo='ppa:ondrej/php'
+- apt: name={{ item }}
+  with_items:
+  - nginx
+  - php5.6-fpm
+- copy: src=files/nginx/default dest=/etc/nginx/sites-available/default
+- file: path=~/www state=directory
+  become: no
+- copy: src=files/nginx/index.html dest=~/www/index.html
+  become: no
+- service: name=nginx state=reloaded

@@ -1,0 +1,22 @@
+---
+- postgresql_user: name=ttrss password={{ db_password }}
+  become_user: postgres
+- postgresql_db: name=ttrss owner=ttrss
+  become_user: postgres
+- git: repo=https://github.com/dittos/ttrss-mirror.git dest=~/www/reader force=yes
+  become: no
+- template: src=files/ttrss/config.php.j2 dest=~/www/reader/config.php
+  become: no
+- file: path=~/www/reader/{{ item }} mode=0777 recurse=yes state=directory
+  with_items:
+  - cache
+  - feed-icons
+  - lock
+- apt: name={{ item }}
+  with_items:
+  - php5.6-pgsql
+  - php5.6-mbstring
+  - php5.6-xml
+  - php5.6-mcrypt
+- copy: src=files/ttrss/ttrss.service dest=/lib/systemd/system/ttrss.service
+- service: name=ttrss state=restarted
