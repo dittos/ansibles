@@ -12,6 +12,7 @@
   - cache
   - feed-icons
   - lock
+  become: no
 - apt: name={{ item }}
   with_items:
   - php5.6-pgsql

@@ -1,0 +1,10 @@
+---
+- git: repo=https://tt-rss.org/git/tt-rss.git dest=~/tt-rss force=yes
+  become: no
+- copy: src=files/ttrss-mirror/github-key dest=~/.ssh/ttrss-github-key mode=0400
+  become: no
+- shell: git remote add mirror git@github.com:dittos/ttrss-mirror.git || true
+  args:
+    chdir: ~/tt-rss
+  become: no
+- cron: name="ttrss-mirror" minute="0" hour="0" user=ubuntu job="cd ~/tt-rss; git pull origin; GIT_SSH_COMMAND='ssh -i ~/.ssh/ttrss-github-key' git push --mirror mirror"

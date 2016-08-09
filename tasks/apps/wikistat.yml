@@ -4,7 +4,7 @@
 - pip: requirements=~/wikistat/requirements.txt virtualenv=~/.venv/wikistat
   become: no
 - cron: name="wikistat" minute="*/10" user=ubuntu job="cd ~/wikistat; git pull; ~/.venv/wikistat/bin/python -m wikistat.collect && ~/.venv/wikistat/bin/python -m wikistat.report"
-- file: path=~/wikistat/index.html state=file
+- file: path=~/wikistat/index.html state=touch
   become: no
 - file: path=~/www/wikistat state=directory
   become: no
