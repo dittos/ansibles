@@ -1,0 +1,16 @@
+[Unit]
+Description=Sentry Main Service
+After=network.target
+Requires=sentry-worker.service
+Requires=sentry-cron.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/home/ubuntu/.venv/sentry
+Environment=SENTRY_CONF=/home/ubuntu/sentry
+ExecStart=/home/ubuntu/.venv/sentry/bin/sentry run web
+
+[Install]
+WantedBy=multi-user.target

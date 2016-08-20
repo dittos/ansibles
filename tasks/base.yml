@@ -4,6 +4,8 @@
   with_items:
   - python-pip
   - python-virtualenv
+  - python-dev
+  - build-essential
   - libpq-dev
   - htop
 # for postgresql actions

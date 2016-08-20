@@ -1,2 +1,5 @@
 ---
 db_password: 
+sentry_secret_key:
+sentry_email: 
+sentry_host:

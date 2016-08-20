@@ -1,0 +1,34 @@
+---
+- apt: name={{ item }}
+  with_items:
+  - libxslt1-dev
+  - libffi-dev
+  - libjpeg-dev
+  - libxml2-dev
+  - libxslt-dev
+  - libyaml-dev
+  - redis-server
+- pip: name=sentry version=8.7.0 virtualenv=~/.venv/sentry
+  become: no
+- file: path=~/sentry state=directory
+  become: no
+- template: src=files/sentry/sentry.conf.py.j2 dest=~/sentry/sentry.conf.py
+  become: no
+- template: src=files/sentry/config.yml.j2 dest=~/sentry/config.yml
+  become: no
+- template: src=files/sentry/nginx.conf.j2 dest=/etc/nginx/sites-enabled/sentry
+- postgresql_user: name=sentry password={{ db_password }}
+  become_user: postgres
+- postgresql_db: name=sentry owner=sentry
+  become_user: postgres
+- shell: SENTRY_CONF=~/sentry ~/.venv/sentry/bin/sentry upgrade --noinput
+  become: no
+- shell: SENTRY_CONF=~/sentry ~/.venv/sentry/bin/sentry createuser --email={{ sentry_email }} --password=changeme --superuser --no-input || true
+  become: no
+- copy: src=files/sentry/{{ item }} dest=/lib/systemd/system/{{ item }}
+  with_items:
+  - sentry-web.service
+  - sentry-worker.service
+  - sentry-cron.service
+- service: name=sentry-web state=restarted
+- service: name=nginx state=reloaded

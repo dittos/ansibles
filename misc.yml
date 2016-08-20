@@ -13,3 +13,4 @@
   - include: tasks/apps/ttrss.yml
   - include: tasks/apps/wikistat.yml
   - include: tasks/apps/ttrss-mirror.yml
+  - include: tasks/apps/sentry.yml
