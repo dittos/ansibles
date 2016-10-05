@@ -20,4 +20,5 @@
   - php5.6-xml
   - php5.6-mcrypt
 - copy: src=files/ttrss/ttrss.service dest=/lib/systemd/system/ttrss.service
+- command: systemctl enable ttrss.service
 - service: name=ttrss state=restarted

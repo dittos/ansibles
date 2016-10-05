@@ -30,5 +30,10 @@
   - sentry-web.service
   - sentry-worker.service
   - sentry-cron.service
+- command: systemctl enable {{ item }}
+  with_items:
+  - sentry-web.service
+  - sentry-worker.service
+  - sentry-cron.service
 - service: name=sentry-web state=restarted
 - service: name=nginx state=reloaded
