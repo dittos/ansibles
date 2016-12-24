@@ -7,4 +7,4 @@
   args:
     chdir: ~/tt-rss
   become: no
-- cron: name="ttrss-mirror" minute="0" hour="0" user=ubuntu job="cd ~/tt-rss; git pull origin; GIT_SSH_COMMAND='ssh -i ~/.ssh/ttrss-github-key' git push --mirror mirror"
+- cron: name="ttrss-mirror" minute="0" hour="0" user=ditto job="cd ~/tt-rss; git pull origin; GIT_SSH_COMMAND='ssh -i ~/.ssh/ttrss-github-key' git push --mirror mirror"

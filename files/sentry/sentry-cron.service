@@ -6,9 +6,9 @@ After=network.target
 Type=simple
 User=www-data
 Group=www-data
-WorkingDirectory=/home/ubuntu/.venv/sentry
-Environment=SENTRY_CONF=/home/ubuntu/sentry
-ExecStart=/home/ubuntu/.venv/sentry/bin/sentry run cron
+WorkingDirectory=/home/ditto/.venv/sentry
+Environment=SENTRY_CONF=/home/ditto/sentry
+ExecStart=/home/ditto/.venv/sentry/bin/sentry run cron
 
 [Install]
 WantedBy=multi-user.target

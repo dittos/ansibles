@@ -1,9 +1,9 @@
 ---
 - hosts: all
-  remote_user: ubuntu
+  remote_user: ditto
   become: yes
   vars:
-    domain: ec2.dittos.pe.kr
+    domain: linode.dittos.pe.kr
   vars_files:
   - vars.yml
   tasks:
